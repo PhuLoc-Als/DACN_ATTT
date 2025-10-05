@@ -1,0 +1,174 @@
+1️⃣ Phishing Detection Dataset (Mendeley / Tamal, 2023)
+
+Tên đầy đủ: Phishing Detection Dataset
+
+DOI: 10.17632/6tm2d6sz7p.1
+
+Tác giả: Maruf Tamal
+
+Ngày công bố: 7 June 2023
+
+Nguồn công bố: Mendeley Data (được trích dẫn trong bài báo Frontiers in Computer Science, 2024)
+
+Kích thước: 247,950 bản ghi
+
+Phishing: 128,541
+
+Legitimate: 119,409
+
+Đặc trưng: 41 features + 1 target (Type hoặc Label)
+
+Dạng dữ liệu: Numeric — chỉ dựa trên URL (không crawl HTML)
+
+Feature ví dụ:
+url_length, number_of_dots_in_url, having_digits_in_domain, entropy_of_url, domain_length, number_of_subdomains, having_query, path_length, …
+
+Nguồn gốc dữ liệu: PhishTank, Alexa, OpenPhish
+
+License: CC BY 4.0
+
+Ứng dụng:
+
+Mô hình baseline ML: Logistic Regression, RandomForest, XGBoost
+
+Benchmark so sánh độ chính xác mô hình phát hiện phishing theo URL pattern
+
+🧠 2️⃣ StealthPhisher Dataset (Mendeley, 2025)
+
+Tên đầy đủ: StealthPhisher
+
+DOI: 10.17632/m2479kmybx.1
+
+Tác giả: Tanmay Jha, Harshit Goswami, Chirag Solanki, Dushyant Nagal, Vibhu Yadav, Arvind Prasad
+
+Ngày công bố: 15 January 2025
+
+Nguồn công bố: Mendeley Data
+
+Kích thước: 336,749 bản ghi
+
+Phishing: 175,806
+
+Legitimate: 160,943
+
+Đặc trưng: >60 feature, kết hợp URL + HTML + statistical metrics
+
+Dạng dữ liệu: Numeric + Boolean
+
+Feature ví dụ:
+LengthOfURL, IsDomainIP, HasSSL, IsURLRedirects, HasPopup, HasIFrame, ShannonEntropy, KolmogorovComplexity, FractalDimension, HasPasswordFields, HasBankingKey, Base64PatternCnt, LikelinessIndex, …
+
+Nguồn gốc dữ liệu: PhishTank, spam email repositories, user submissions, crawl HTML thực tế
+
+License: CC BY 4.0
+
+Ứng dụng:
+
+Huấn luyện mô hình nâng cao (Deep Learning, Hybrid ML)
+
+Phát hiện phishing dựa trên hành vi (redirect, form submit, script pattern)
+
+Cực kỳ phù hợp cho các nghiên cứu “anti-evasion phishing detection”
+
+🧠 3️⃣ xfraud Dataset (Mendeley, 2025)
+
+Tên đầy đủ: xfraud – Dataset for Ethereum Phishing Detection
+
+DOI: 10.17632/xgm4dn7ggs.1
+
+Tác giả: Lei Wang
+
+Ngày công bố: 10 September 2025
+
+Nguồn công bố: Mendeley Data
+
+Liên quan bài nghiên cứu: “PDHG: An Ethereum phishing detection approach via heterogeneous graph transformer”
+
+Kích thước: Không xác định theo bản ghi URL – dạng graph dataset
+(bao gồm nhiều node, edge và đặc trưng cho mỗi node)
+
+Định dạng: .parquet
+
+feat_publish.parquet — đặc trưng (node features)
+
+g_publish.parquet — cấu trúc đồ thị (graph edges)
+
+Loại dữ liệu: Graph-based
+
+feat_publish.parquet: vector đặc trưng cho các thực thể (node features)
+
+g_publish.parquet: thông tin liên kết giữa các node (edges, direction, weights)
+
+Ứng dụng:
+
+Dùng cho Graph Neural Networks (GNNs) như GAT, GraphSAGE, hoặc HGT
+
+Phát hiện các hành vi phishing trong blockchain (smart contract, token scam, address fraud)
+
+Có thể trích xuất embedding (Node2Vec, DeepWalk) → kết hợp với các dataset URL truyền thống
+
+License: CC BY 4.0
+
+
+
+
+
+
+
+
+
+
+1. So sánh bản chất của 3 dataset
+Thuộc tính	Phishing Detection (2023)	StealthPhisher (2025)	xfraud (2025)
+Nguồn dữ liệu	URL-only (PhishTank, Alexa, OpenPhish)	URL + HTML crawl + entropy metrics	Blockchain phishing (Ethereum / smart contract)
+Định dạng file	.csv	.csv	.parquet
+Kiểu dữ liệu	Numeric (URL features)	Numeric + Boolean (URL + HTML + statistical)	Graph (node + edge + features)
+Số lượng mẫu	~247K	~336K	Không phải URL, mà là các graph entities
+Đặc trưng chính	URL length, dots, entropy	URL, HTML structure, entropy, complexity	Graph embeddings, relations, node attributes
+Mục đích gốc	Phát hiện phishing qua URL patterns	Phát hiện phishing đa chiều (URL + behavior)	Phát hiện phishing trong hệ sinh thái blockchain
+⚙️ 2. Có thể “kết hợp” theo ba cấp độ
+Mức độ	Cách làm	Mục tiêu
+A. Kết hợp 2 dataset URL-based (Phishing Detection + StealthPhisher)	✔️ Có thể gộp dễ dàng vì cùng là bảng (CSV) với nhãn Label (Phishing/Legitimate). Chỉ cần chuẩn hóa tên cột, chọn feature chung (ví dụ: url_length, entropy_of_url, number_of_dots_in_url, …).	Tạo bộ dữ liệu URL-based lớn (~600K mẫu).
+B. Thêm đặc trưng nâng cao từ xfraud (Graph)	⚠️ Không thể gộp hàng ngang (vì không cùng định dạng). Có thể lấy embedding vector từ xfraud (Graph Neural Network → Node2Vec hoặc GAT) rồi merge theo domain hoặc category.	Mở rộng sang “multi-source phishing detection”.
+C. Fusion theo mô hình (Model-level fusion)	Huấn luyện 3 mô hình riêng biệt → kết hợp bằng Voting Ensemble / Weighted Averaging.	So sánh và kết hợp kết quả dự đoán để tăng độ chính xác.
+🧱 3. Kịch bản gợi ý để bạn triển khai
+🔹 Giai đoạn 1 – Gộp 2 dataset URL-based
+
+Chuẩn hóa tên cột giữa 2 CSV (Type, Label, …).
+
+Giữ lại các feature có ý nghĩa trùng nhau (ví dụ: url_length, entropy_of_url, number_of_dots_in_url).
+
+Gộp dữ liệu bằng pd.concat().
+
+Thêm cột “Source” để biết dữ liệu đến từ đâu.
+
+Dùng để train baseline ML (RandomForest, XGBoost).
+
+🔹 Giai đoạn 2 – Sử dụng xfraud
+
+Đọc file feat_publish.parquet bằng pandas hoặc pyarrow.
+
+Trích xuất vector đặc trưng (feature embedding) cho node.
+
+Nếu muốn liên kết với dataset URL:
+
+Dò các domain/IP trùng lặp.
+
+Hoặc nhóm xfraud riêng (model phụ, kiểu graph-based detector).
+
+🔹 Giai đoạn 3 – Kết hợp ở cấp mô hình
+
+Train 3 mô hình riêng biệt (URL-only, URL+HTML, Graph).
+
+Sử dụng voting hoặc stacking ensemble:
+
+pred = (pred_url + pred_stealth + pred_graph) / 3
+final_label = np.where(pred > 0.5, 1, 0)
+
+
+So sánh accuracy, recall, F1-score giữa từng model và ensemble.
+
+✅ Kết luận
+Dataset	Có thể gộp?	Cách nên làm
+Phishing Detection + StealthPhisher	✅ Có thể gộp trực tiếp	Chuẩn hóa & chọn feature chung
+Thêm xfraud	⚠️ Không gộp bảng được, chỉ có thể kết hợp qua model	Dùng embedding hoặc mô hình riêng
