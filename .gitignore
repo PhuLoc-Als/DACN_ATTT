@@ -205,3 +205,20 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+# === Bỏ qua toàn bộ dataset lớn ===
+DATASET/DeepURLBench/
+DATASET/Phishing Detection Dataset.csv
+DATASET/StealthPhisher2025.csv
+
+# Bỏ qua file dữ liệu / cache tạm
+DATASET/**/*.parquet
+DATASET/**/*.csv
+DATASET/**/*.zip
+DATASET/**/*.pkl
+DATASET/**/*.json
+*.cache/
+*.hf_cache/
+HF_CACHE/
+DeepURLBench_cache/
