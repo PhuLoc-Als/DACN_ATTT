@@ -222,3 +222,12 @@ DATASET/**/*.json
 *.hf_cache/
 HF_CACHE/
 DeepURLBench_cache/
+# Bỏ qua model & dữ liệu huấn luyện
+MODELS/
+DATASET/*.csv
+*.pkl
+*.npz
+*.parquet
+
+# Bỏ qua notebook tạm
+*.ipynb_checkpoints
