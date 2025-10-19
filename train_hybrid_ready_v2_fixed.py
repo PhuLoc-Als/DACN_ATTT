@@ -1,55 +1,31 @@
 # ======================================================
-#  train_hybrid_ready_v2_fixed.py
-#  → Huấn luyện mô hình ML (RF + XGB + Logistic + Stacking)
-#  → Tối ưu RAM + độ chính xác cao, tương thích Python 3.13
+#  train_hybrid_ready_v3_balanced.py
+#  → Huấn luyện mô hình ML (RF + XGB + GB + Logistic + optional SVM)
+#  → Tối ưu độ chính xác, dùng đa luồng CPU + GPU, RAM ≥ 16GB
 # ======================================================
 
-import os
-import pandas as pd
-import numpy as np
+import os, time, warnings, inspect
+import pandas as pd, numpy as np
+from collections import Counter
+from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from xgboost import XGBClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report
 from imblearn.over_sampling import SMOTE
-from tqdm import tqdm
-from collections import Counter
-import time
 import joblib
-import warnings
 warnings.filterwarnings("ignore")
 
-# === Universal Patch for sklearn + Python 3.13 ===
-import sklearn, inspect
-
-def _safe_tags(self=None):
-    return {
-        "non_deterministic": False,
-        "multioutput": False,
-        "allow_nan": True,
-        "poor_score": False,
-        "requires_positive_X": False,
-        "stateless": False,
-    }
-
-# Vá toàn bộ class trong sklearn
+# === Patch sklearn cho Python 3.13 ===
+import sklearn
+def _safe_tags(self=None): return {"allow_nan": True}
 for _, cls in inspect.getmembers(sklearn, inspect.isclass):
     if not hasattr(cls, "__sklearn_tags__"):
         cls.__sklearn_tags__ = _safe_tags
 
-# Vá cả BaseEstimator và clone logic
-if not hasattr(sklearn.base.BaseEstimator, "__sklearn_tags__"):
-    sklearn.base.BaseEstimator.__sklearn_tags__ = _safe_tags
-
-try:
-    from sklearn.utils import _tags
-    _tags.get_tags = lambda est: getattr(est, "__sklearn_tags__", _safe_tags)()
-except Exception:
-    pass
-
-# === 1. Kiểm tra GPU ===
+# === 1. GPU Detection ===
 try:
     from pynvml import nvmlInit, nvmlDeviceGetHandleByIndex, nvmlDeviceGetName
     nvmlInit()
@@ -57,205 +33,127 @@ try:
     print(f"[+] GPU detected: {gpu_name}")
 except Exception:
     gpu_name = None
-    print("[!] GPU not detected — fallback to CPU.")
+    print("[!] GPU not detected — using CPU.")
 
-# === 2. Đường dẫn dataset ===
+# === 2. Load Datasets ===
 path1 = "DATASET/Phishing Detection Dataset.csv"
 path2 = "DATASET/StealthPhisher2025.csv"
-
 print("[+] Loading datasets...")
-df1 = pd.read_csv(path1, encoding="utf-8", on_bad_lines="skip")
-df2 = pd.read_csv(path2, encoding="utf-8", on_bad_lines="skip")
+df1, df2 = pd.read_csv(path1, on_bad_lines="skip"), pd.read_csv(path2, on_bad_lines="skip")
 print(f"[+] df1={df1.shape}, df2={df2.shape}")
 
 # === 3. Chuẩn hóa nhãn ===
-def normalize_label_df1(df):
-    df = df.rename(columns={"Type": "Label"})
-    df["Label"] = df["Label"].astype(int)
+def normalize(df):
+    if "Label" not in df.columns:
+        for c in df.columns:
+            if "type" in c.lower() or "label" in c.lower():
+                df = df.rename(columns={c: "Label"})
+                break
+    df["Label"] = df["Label"].astype(str).str.lower().map({"phishing": 1, "legitimate": 0, "1": 1, "0": 0}).astype(int)
     return df
+df1, df2 = normalize(df1), normalize(df2)
 
-def normalize_label_df2(df):
-    label_cols = [c.lower() for c in df.columns]
-    if "label" in label_cols:
-        df = df.rename(columns={df.columns[label_cols.index("label")]: "Label"})
-        df["Label"] = df["Label"].astype(str).str.lower().map({"phishing": 1, "legitimate": 0})
-    else:
-        phish_cols = [c for c in df.columns if "phish" in c.lower()]
-        if len(phish_cols):
-            df["Label"] = df[phish_cols[0]].apply(lambda x: 1 if x == 1 else 0)
-        else:
-            raise ValueError("Không tìm thấy cột nhãn phù hợp trong StealthPhisher2025.csv")
-    return df
+# === 4. Loại bỏ cột text ===
+def drop_text(df):
+    text_cols = [c for c in df.columns if df[c].dtype == object and c != "Label"]
+    return df.drop(columns=text_cols, errors="ignore")
+df1, df2 = drop_text(df1), drop_text(df2)
 
-df1 = normalize_label_df1(df1)
-df2 = normalize_label_df2(df2)
+# === 5. Hợp nhất ===
+cols = sorted(list((set(df1.columns) | set(df2.columns)) - {"Label"}))
+for c in cols:
+    for d in [df1, df2]:
+        if c not in d: d[c] = np.nan
+df = pd.concat([df1[cols+["Label"]], df2[cols+["Label"]]], ignore_index=True)
+print(f"[+] Combined shape: {df.shape}")
 
-# === 4. Loại bỏ cột text / domain ===
-def drop_text_columns(df):
-    drop_cols = []
-    for c in df.columns:
-        if any(k in c.lower() for k in ["url", "domain", "tld"]) or df[c].dtype == object:
-            drop_cols.append(c)
-    drop_cols = [c for c in drop_cols if c != "Label"]
-    return df.drop(columns=drop_cols, errors="ignore")
-
-df1_clean = drop_text_columns(df1)
-df2_clean = drop_text_columns(df2)
-
-# === 5. Hợp nhất cột (union) ===
-cols1 = [c for c in df1_clean.columns if c != "Label"]
-cols2 = [c for c in df2_clean.columns if c != "Label"]
-all_cols = sorted(list(set(cols1 + cols2)))
-
-for c in all_cols:
-    if c not in df1_clean.columns:
-        df1_clean[c] = np.nan
-    if c not in df2_clean.columns:
-        df2_clean[c] = np.nan
-
-df = pd.concat([df1_clean[all_cols + ["Label"]], df2_clean[all_cols + ["Label"]]], ignore_index=True)
-print(f"[+] Combined dataset shape: {df.shape}")
-
-# === 6. Chuẩn hóa numeric + xử lý NaN ===
-for c in all_cols:
-    df[c] = pd.to_numeric(df[c], errors="coerce")
+# === 6. Xử lý NaN và chuẩn hóa ===
+df[cols] = df[cols].apply(pd.to_numeric, errors="coerce")
 df.fillna(df.median(numeric_only=True), inplace=True)
+X, y = df[cols].astype(np.float32).values, df["Label"].astype(np.int8).values
 
-# 💡 Giảm RAM tiêu thụ
-X = df[all_cols].astype(np.float32).values
-y = df["Label"].astype(np.int8).values
-
-# === 7. Cân bằng dữ liệu bằng SMOTE (nếu cần) ===
+# === 7. SMOTE ===
 counts = Counter(y)
-minority_ratio = min(counts.values()) / max(counts.values())
-print(f"[+] Class distribution before SMOTE: {counts}, ratio={minority_ratio:.2f}")
-
-if minority_ratio < 0.9:
-    print("[+] Applying SMOTE to balance classes...")
-    smote = SMOTE(random_state=42, sampling_strategy=0.8, n_jobs=4)
-    X_res, y_res = smote.fit_resample(X, y)
-    print(f"[+] After SMOTE: {X_res.shape}, [class balance: {np.bincount(y_res)}]")
+ratio = min(counts.values()) / max(counts.values())
+print(f"[+] Class distribution before SMOTE: {counts}, ratio={ratio:.2f}")
+if ratio < 0.95:
+    print("[+] Applying full SMOTE (1.0)...")
+    smote = SMOTE(random_state=42, sampling_strategy=1.0, n_jobs=-1)
+    X, y = smote.fit_resample(X, y)
+    print(f"[+] After SMOTE: {X.shape}, balance={np.bincount(y)}")
 else:
-    print("[!] Dataset already balanced — skipping SMOTE.")
-    X_res, y_res = X, y
+    print("[!] Skipping SMOTE — already balanced.")
 
-# === 8. Chia dữ liệu train/test ===
+# === 8. Train/Test split ===
 X_train, X_test, y_train, y_test = train_test_split(
-    X_res, y_res, test_size=0.2, random_state=42, stratify=y_res
-)
-
-# === 9. Chuẩn hóa dữ liệu ===
+    X, y, test_size=0.2, random_state=42, stratify=y)
 scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
+X_train, X_test = scaler.fit_transform(X_train), scaler.transform(X_test)
 
-# === 10. Huấn luyện mô hình ML riêng biệt ===
-print("\n[+] Training individual models (RF + XGB + Logistic)...")
-
+# === 9. Định nghĩa mô hình ===
 models = [
-    ("Random Forest", RandomForestClassifier(
-        n_estimators=300,     # Giảm số cây để tránh tràn RAM
-        max_depth=25,
-        random_state=42,
-        n_jobs=4              # Giới hạn CPU threads
-    )),
+    ("RandomForest", RandomForestClassifier(
+        n_estimators=800, max_depth=35, n_jobs=-1, random_state=42)),
     ("XGBoost", XGBClassifier(
-        n_estimators=600,
-        max_depth=10,
-        learning_rate=0.03,
-        subsample=0.9,
-        colsample_bytree=0.9,
-        gamma=0.1,
-        reg_lambda=1.2,
-        eval_metric="logloss",
-        random_state=42,
-        n_jobs=4,
-        tree_method="hist",
-        device="cuda" if gpu_name else "cpu"
-    )),
+        n_estimators=900, max_depth=12, learning_rate=0.02,
+        subsample=0.9, colsample_bytree=0.9, gamma=0.1, reg_lambda=1.2,
+        eval_metric="logloss", n_jobs=-1, tree_method="gpu_hist" if gpu_name else "hist",
+        device="cuda" if gpu_name else "cpu", random_state=42)),
+    ("GradientBoosting", GradientBoostingClassifier(
+        n_estimators=500, learning_rate=0.05, max_depth=6, random_state=42)),
     ("Logistic", LogisticRegression(
-        C=2.0, max_iter=3000, n_jobs=4, random_state=42
-    ))
+        C=3.0, max_iter=5000, solver="saga", n_jobs=-1, random_state=42))
 ]
 
-trained_models = {}
+trained = {}
 start_all = time.time()
-
 for name, model in tqdm(models, desc="🔄 Training Progress", ncols=100):
-    print(f"\n⚙️ Bắt đầu huấn luyện {name} ...")
-    start_time = time.time()
-    model.fit(X_train_scaled, y_train)
-    elapsed = time.time() - start_time
-    print(f"✅ Hoàn thành {name} trong {elapsed/60:.2f} phút.")
-    trained_models[name] = model
+    t0 = time.time()
+    print(f"\n⚙️  Training {name} ...")
+    model.fit(X_train, y_train)
+    print(f"✅ Done {name} in {(time.time()-t0)/60:.2f} min.")
+    trained[name] = model
+print(f"\n⏱ Total training: {(time.time()-start_all)/60:.2f} min.")
 
-end_all = time.time()
-print(f"\n⏱ Tổng thời gian huấn luyện: {(end_all - start_all)/60:.2f} phút.")
-print("\n🎯 Tất cả mô hình đã được huấn luyện xong!")
-
-# === 11. Voting mềm ===
-print("[+] Combining predictions (soft voting)...")
-rf_pred = trained_models["Random Forest"].predict_proba(X_test_scaled)
-xgb_pred = trained_models["XGBoost"].predict_proba(X_test_scaled)
-log_pred = trained_models["Logistic"].predict_proba(X_test_scaled)
-
-weights = np.array([3, 4, 1])
-y_pred_prob = (rf_pred * weights[0] + xgb_pred * weights[1] + log_pred * weights[2]) / weights.sum()
+# === 10. Soft Voting ===
+print("\n[+] Soft voting ensemble ...")
+probs = np.array([m.predict_proba(X_test) for m in trained.values()])
+weights = np.array([3, 4, 2, 1])  # RF, XGB, GB, Logistic
+y_pred_prob = np.tensordot(probs, weights, axes=(0,0)) / weights.sum()
 y_pred = np.argmax(y_pred_prob, axis=1)
 
-# === 12. Stacking meta-model (thay thế thủ công không dùng StackingClassifier) ===
-print("\n[+] Training stacking meta-model (RF + XGB + Logistic)...")
+# === 11. Manual Stacking ===
+print("\n[+] Training stacking meta-model ...")
+stack_train = np.column_stack([m.predict_proba(X_train)[:,1] for m in trained.values()])
+stack_test  = np.column_stack([m.predict_proba(X_test)[:,1] for m in trained.values()])
+meta = LogisticRegression(max_iter=5000, solver="saga", n_jobs=-1, random_state=42)
+meta.fit(stack_train, y_train)
+stack_pred = meta.predict(stack_test)
 
-# Tạo đầu vào mới từ xác suất dự đoán của các mô hình con
-stack_train = np.column_stack([
-    trained_models["Random Forest"].predict_proba(X_train_scaled)[:, 1],
-    trained_models["XGBoost"].predict_proba(X_train_scaled)[:, 1],
-    trained_models["Logistic"].predict_proba(X_train_scaled)[:, 1]
-])
-
-stack_test = np.column_stack([
-    trained_models["Random Forest"].predict_proba(X_test_scaled)[:, 1],
-    trained_models["XGBoost"].predict_proba(X_test_scaled)[:, 1],
-    trained_models["Logistic"].predict_proba(X_test_scaled)[:, 1]
-])
-
-# Dùng Logistic Regression làm meta-model
-meta_model = LogisticRegression(max_iter=3000, random_state=42)
-meta_model.fit(stack_train, y_train)
-stack_pred = meta_model.predict(stack_test)
-
-print("\n--- Stacking Evaluation (Custom Manual) ---")
+print("\n--- Stacking Evaluation ---")
 print(f"Accuracy: {accuracy_score(y_test, stack_pred):.4f}")
 print(classification_report(y_test, stack_pred))
 
-# Lưu mô hình meta
-os.makedirs("MODELS", exist_ok=True)
-joblib.dump(meta_model, "MODELS/ml_meta_model.pkl")
-print("✅ Saved custom meta-model to MODELS/ml_meta_model.pkl")
+# === 12. (Optional) SVM Subset thử nghiệm ===
+use_svm = True  # đổi thành False nếu không muốn thử
+if use_svm:
+    from sklearn.svm import LinearSVC
+    print("\n[+] Training LinearSVC on 10% subset ...")
+    subset = np.random.choice(len(X_train), int(0.1 * len(X_train)), replace=False)
+    svm = LinearSVC(max_iter=5000)
+    svm.fit(X_train[subset], y_train[subset])
+    svm_acc = svm.score(X_test, y_test)
+    print(f"✅ SVM subset accuracy: {svm_acc:.4f}")
 
-# === 13. Voting Evaluation ===
-print("\n--- Voting Evaluation ---")
-print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
-print(classification_report(y_test, y_pred))
-
-# === 14. Lưu mô hình và dữ liệu cho DL ===
+# === 13. Save ===
 os.makedirs("MODELS", exist_ok=True)
-joblib.dump(trained_models, "MODELS/ml_hybrid_models.pkl")
+joblib.dump(trained, "MODELS/ml_hybrid_models.pkl")
+joblib.dump(meta, "MODELS/ml_meta_model.pkl")
 joblib.dump(scaler, "MODELS/ml_scaler.pkl")
-pd.Series(all_cols).to_csv("MODELS/ml_features.csv", index=False)
+pd.Series(cols).to_csv("MODELS/ml_features.csv", index=False)
+np.savez_compressed("MODELS/ml_training_data.npz",
+    X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test,
+    y_pred_prob=y_pred_prob, feature_names=np.array(cols))
 
-np.savez_compressed(
-    "MODELS/ml_training_data.npz",
-    X_train=X_train_scaled,
-    y_train=y_train,
-    X_test=X_test_scaled,
-    y_test=y_test,
-    y_pred_prob=y_pred_prob,
-    feature_names=np.array(all_cols)
-)
-
-print("\n✅ Saved models to MODELS/ml_hybrid_models.pkl")
-print("✅ Saved scaler to MODELS/ml_scaler.pkl")
-print("✅ Saved feature list to MODELS/ml_features.csv")
-print("✅ Saved train/test data for DL to MODELS/ml_training_data.npz")
-print("\n=== DONE ===")
+print("\n✅ Saved all models and data.")
+print("=== DONE ===")
