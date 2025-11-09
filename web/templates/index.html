@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Hybrid Phish Checker</title>
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<div class="container">
+  <h1>🔎 Hybrid Phish Checker (ML + DL)</h1>
+  <form method="POST">
+    <input type="text" name="url" placeholder="Nhập URL cần kiểm tra" required>
+    <input type="number" step="0.1" name="threshold" value="0.5" style="width:80px">
+    <button type="submit">Check</button>
+  </form>
+
+  {% if result %}
+  <div class="result">
+    <h2>Kết quả</h2>
+    <p><b>URL:</b> {{ result.url }}</p>
+    <p><b>Phán đoán:</b> <span class="{{ 'phish' if result.label=='phish' else 'legit' }}">{{ result.label }}</span></p>
+    <ul>
+      <li>Final Score: {{ result.score }}</li>
+      <li>Heuristic: {{ result.heuristic }}</li>
+      <li>ML Model: {{ result.ml_score if result.ml_score is not none else "N/A" }}</li>
+      <li>DL Model: {{ result.dl_score if result.dl_score is not none else "N/A" }}</li>
+    </ul>
+    <h3>🌍 Trạng thái Website</h3>
+    {% if result.http.ok %}
+      <p>✅ Online ({{ result.http.status }}) - {{ result.http.time }}s</p>
+    {% else %}
+      <p>❌ Offline / Lỗi: {{ result.http.error }}</p>
+    {% endif %}
+    {% if result.screenshot %}
+      <h3>📸 Ảnh chụp trang web</h3>
+      <img src="{{ result.screenshot }}" style="max-width:100%;border-radius:8px">
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+</body>
+</html>
