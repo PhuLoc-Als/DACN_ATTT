@@ -209,6 +209,7 @@ __marimo__/
 
 # === Bỏ qua toàn bộ dataset lớn ===
 DATASET/DeepURLBench/
+DATASET/PhishIRIS/
 DATASET/Phishing Detection Dataset.csv
 DATASET/StealthPhisher2025.csv
 
