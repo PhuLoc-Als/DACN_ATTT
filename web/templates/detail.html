@@ -1,0 +1,51 @@
+ <!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết phân tích URL</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+<div class="container">
+
+    <h1>📄 Chi tiết phân tích URL</h1>
+
+    <form method="POST" class="check-form">
+    <input type="text" name="url" placeholder="Nhập URL cần kiểm tra..." required value="{{ url }}">
+    <button type="submit">Check</button>
+</form>
+
+
+
+    <div class="result">
+        <p class="break-url"><b>URL:</b> {{ result.url }}</p>
+        <p><b>Phán đoán:</b>
+            <span class="{{ 'phish' if result.label=='phish' else 'legit' }}">
+                {{ result.label }}
+            </span>
+        </p>
+
+        <ul>
+            <li><b>Final Score:</b> {{ result.score }}</li>
+            <li><b>Heuristic Score:</b> {{ result.heuristic }}</li>
+            <li><b>ML Score:</b> {{ result.ml_score }}</li>
+            <li><b>DL Score:</b> {{ result.dl_score }}</li>
+        </ul>
+
+        <h3>🌍 Trạng thái Website</h3>
+        {% if result.http.ok %}
+            <p>✅ Online ({{ result.http.status }}) - {{ result.http.time }}s</p>
+        {% else %}
+            <p>❌ Offline / Lỗi: {{ result.http.error }}</p>
+        {% endif %}
+
+        {% if result.screenshot %}
+        <h3>📸 Ảnh chụp trang web</h3>
+        <img src="{{ result.screenshot }}" style="max-width:100%;border-radius:8px">
+        {% endif %}
+    </div>
+
+</div>
+</body>
+</html>

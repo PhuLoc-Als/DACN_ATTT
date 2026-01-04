@@ -1,0 +1,97 @@
+/* ===== Kích thước cố định cho popup ===== */
+body {
+    width: 260px;          /* FIX chiều rộng */
+    min-height: 260px;     /* Tránh popup nhảy */
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/* ===== Tiêu đề ===== */
+h2 {
+    margin-top: 0;
+    color: #008c9e;
+}
+
+/* ===== Loading ===== */
+#loading {
+    padding: 15px;
+    background: #eee;
+    border-radius: 6px;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+/* ===== BOX THÔNG TIN URL ===== */
+.box {
+    background: #f3f3f3;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: left;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+/* Chỉ riêng phần URL: 2 dòng + 3 chấm */
+.url-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;         /* tối đa 2 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    margin-top: 2px;
+}
+
+/* ===== Vòng tròn phần trăm ===== */
+.circle {
+    width: 120px;
+    height: 120px;
+    margin: 10px auto;
+    position: relative;
+}
+
+.circle svg {
+    width: 120px;
+    height: 120px;
+    transform: rotate(-90deg);
+}
+
+.circle circle {
+    fill: none;
+    stroke-width: 10;
+}
+
+.bg {
+    stroke: #ddd;
+}
+
+/* r=54 -> chu vi ~339 */
+.progress {
+    stroke-dasharray: 339;
+    stroke-dashoffset: 339;
+    transition: stroke-dashoffset 1s ease-out;
+    stroke-linecap: round;
+}
+
+.circle span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ===== Link xem chi tiết ===== */
+.detail-link {
+    display: block;
+    margin-top: 12px;
+    text-decoration: none;
+    color: #0077cc;
+    font-size: 14px;
+}
+
+.detail-link:hover {
+    text-decoration: underline;
+}

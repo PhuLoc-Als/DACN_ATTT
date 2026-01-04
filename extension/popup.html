@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PhishGuard</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <h2>PhishGuard</h2>
+
+    <!-- Loading -->
+    <div id="loading">Đang kiểm tra...</div>
+
+    <!-- Content -->
+    <div id="content" style="display:none;">
+
+        <!-- Vòng tròn % -->
+        <div class="circle">
+            <svg>
+                <!-- r = 54 để không bị mất góc -->
+                <circle class="bg" cx="60" cy="60" r="54"></circle>
+                <circle class="progress" cx="60" cy="60" r="54"></circle>
+            </svg>
+            <span id="score-text">0%</span>
+        </div>
+
+        <!-- Kết quả -->
+        <div id="result-box" class="box">
+            <!-- nội dung sẽ được JS fill -->
+        </div>
+
+        <!-- Link mở trang chi tiết -->
+        <a id="detail-btn" class="detail-link" target="_blank">→ Xem chi tiết</a>
+
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

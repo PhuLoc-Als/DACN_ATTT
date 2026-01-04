@@ -1,0 +1,23 @@
+# ---- Web Framework ----
+Flask>=2.2
+
+# ---- ML / DL ----
+numpy
+pandas
+tensorflow
+scikit-learn
+xgboost
+joblib
+
+# ---- Data Processing ----
+Pillow
+requests
+tqdm
+
+# ---- Screenshot / Browser Automation ----
+playwright
+
+# ---- Optional (ổn định, tránh bug numpy) ----
+protobuf<4
+h5py
+

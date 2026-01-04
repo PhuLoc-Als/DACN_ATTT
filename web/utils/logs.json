@@ -1,0 +1,578 @@
+[
+  {
+    "time": "2025-11-23 15:22:07",
+    "url": "http://chrome://newtab/",
+    "label": "phish",
+    "score": 0.5
+  },
+  {
+    "time": "2025-11-30 12:56:32",
+    "url": "https://www.youtube.com/watch?v=gOtfJ151ue4&list=RD-YLQYo5cXwo&index=22",
+    "label": "legit",
+    "score": 0.49149073362350465
+  },
+  {
+    "time": "2025-11-30 13:00:36",
+    "url": "https://www.youtube.com/watch?v=wDInbOfWov0&list=RD-YLQYo5cXwo&index=23",
+    "label": "legit",
+    "score": 0.4560397287209829
+  },
+  {
+    "time": "2025-11-30 13:08:26",
+    "url": "https://www.youtube.com/watch?v=Rr5bP7uLnfk&list=RD-YLQYo5cXwo&index=26",
+    "label": "legit",
+    "score": 0.4660613755385081
+  },
+  {
+    "time": "2025-11-30 13:08:43",
+    "url": "https://www.youtube.com/watch?v=Rr5bP7uLnfk&list=RD-YLQYo5cXwo&index=26",
+    "label": "legit",
+    "score": 0.4660613755385081
+  },
+  {
+    "time": "2025-11-30 13:08:45",
+    "url": "http://127.0.0.1:5000/detail?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DRr5bP7uLnfk%26list%3DRD-YLQYo5cXwo%26index%3D26",
+    "label": "legit",
+    "score": 0.48686361735065775
+  },
+  {
+    "time": "2025-11-30 13:09:01",
+    "url": "https://www.canva.com/",
+    "label": "phish",
+    "score": 0.95
+  },
+  {
+    "time": "2025-11-30 13:13:31",
+    "url": "https://www.canva.com/",
+    "label": "legit",
+    "score": 0.46848785877227783
+  },
+  {
+    "time": "2025-11-30 13:13:38",
+    "url": "https://www.youtube.com/watch?v=Rr5bP7uLnfk&list=RD-YLQYo5cXwo&index=26",
+    "label": "legit",
+    "score": 0.4660613755385081
+  },
+  {
+    "time": "2025-11-30 13:13:40",
+    "url": "http://127.0.0.1:5000/detail?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DRr5bP7uLnfk%26list%3DRD-YLQYo5cXwo%26index%3D26",
+    "label": "legit",
+    "score": 0.48685494114955263
+  },
+  {
+    "time": "2025-11-30 13:13:58",
+    "url": "https://www.canva.com/design/DAG2aoUBC8A/U5tNJ76bn6HBuCoqHeraKg/edit",
+    "label": "phish",
+    "score": 0.5018211921056112
+  },
+  {
+    "time": "2025-11-30 13:15:32",
+    "url": "https://www.youtube.com/watch?v=Rr5bP7uLnfk&list=RD-YLQYo5cXwo&index=26",
+    "label": "legit",
+    "score": 0.4660613755385081
+  },
+  {
+    "time": "2025-11-30 13:15:33",
+    "url": "https://www.youtube.com/watch?v=t6uEo5WdKQc&list=RD-YLQYo5cXwo&index=26",
+    "label": "legit",
+    "score": 0.48115395704905195
+  },
+  {
+    "time": "2025-11-30 13:18:22",
+    "url": "https://www.canva.com/design/DAG2k0_fPQ0/O7XvSjYpVglpVLefz3ZjHw/edit",
+    "label": "phish",
+    "score": 0.5018211921056112
+  },
+  {
+    "time": "2025-11-30 13:19:01",
+    "url": "https://www.youtube.com/",
+    "label": "legit",
+    "score": 0.4682271480560303
+  },
+  {
+    "time": "2025-11-30 13:19:49",
+    "url": "https://chatgpt.com/g/g-p-68f4727151488191ad634c7cb9698053-dacn/project",
+    "label": "phish",
+    "score": 0.5348938147226969
+  },
+  {
+    "time": "2025-11-30 13:19:52",
+    "url": "https://chatgpt.com/g/g-p-68f4727151488191ad634c7cb9698053-dacn/c/6921d4c8-43f8-8322-bdf5-8444f9c97551",
+    "label": "phish",
+    "score": 0.5349761784076691
+  },
+  {
+    "time": "2025-11-30 13:20:37",
+    "url": "https://www.youtube.com/watch?v=tP148ii8sbw&list=RD-YLQYo5cXwo&index=27",
+    "label": "legit",
+    "score": 0.4936798532803854
+  },
+  {
+    "time": "2025-11-30 13:22:26",
+    "url": "https://www.youtube.com/",
+    "label": "legit",
+    "score": 0.4682271480560303
+  },
+  {
+    "time": "2025-11-30 13:22:36",
+    "url": "https://chatgpt.com/g/g-p-68f4727151488191ad634c7cb9698053-dacn/c/6921d4c8-43f8-8322-bdf5-8444f9c97551",
+    "label": "phish",
+    "score": 0.5348938147226969
+  },
+  {
+    "time": "2025-11-30 13:24:18",
+    "url": "https://www.facebook.com/",
+    "label": "legit",
+    "score": 0.4219886163870494
+  },
+  {
+    "time": "2025-11-30 13:25:25",
+    "url": "https://www.youtube.com/watch?v=jho2QlU9H9A&list=RD-YLQYo5cXwo&index=27",
+    "label": "legit",
+    "score": 0.46608431339263917
+  },
+  {
+    "time": "2025-11-30 13:27:09",
+    "url": "https://chatgpt.com/g/g-p-68f4727151488191ad634c7cb9698053-dacn/c/6921d4c8-43f8-8322-bdf5-8444f9c97551",
+    "label": "phish",
+    "score": 0.534934663772583
+  },
+  {
+    "time": "2025-11-30 13:28:49",
+    "url": "https://chatgpt.com/",
+    "label": "legit",
+    "score": 0.4682271480560303
+  },
+  {
+    "time": "2025-11-30 13:35:54",
+    "url": "https://www.youtube.com/",
+    "label": "legit",
+    "score": 0.4682271480560303
+  },
+  {
+    "time": "2025-11-30 13:36:05",
+    "url": "https://vesophuongtrang.com/login.html?ref=https://vesophuongtrang.com:443/user/thong-tin-ve-do.html",
+    "label": "phish",
+    "score": 0.5455772082010905
+  },
+  {
+    "time": "2025-11-30 13:38:25",
+    "url": "https://www.youtube.com/watch?v=oaYrl2hI5uc&list=RD-YLQYo5cXwo&index=27",
+    "label": "phish",
+    "score": 0.5092721899350484
+  },
+  {
+    "time": "2025-11-30 13:41:33",
+    "url": "https://sinhvien2.hutech.edu.vn/login",
+    "label": "phish",
+    "score": 0.5682271480560303
+  },
+  {
+    "time": "2025-11-30 13:41:45",
+    "url": "https://sinhvien2.hutech.edu.vn/login",
+    "label": "phish",
+    "score": 0.5682271480560303
+  },
+  {
+    "time": "2025-11-30 13:42:28",
+    "url": "https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&dsh=S-284270567%3A1764484942813436&emr=1&followup=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&ifkv=ARESoU0MyixgQzIGqc66reJARERwZSsy9wdH1jk6NVaJrH2-V6hxYooz89t9z5BV0uHBiMfv_NGMwg&osid=1&passive=1209600&service=mail&flowName=WebLiteSignIn&flowEntry=ServiceLogin#inbox",
+    "label": "phish",
+    "score": 0.5325891117254893
+  },
+  {
+    "time": "2025-11-30 13:42:49",
+    "url": "https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&dsh=S2014631613%3A1764484964646188&emr=1&followup=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&ifkv=ARESoU3iqgfc4wbJ3H7svr6xe-ID54txbHPzSHcKno3d_DHai3sZJbsS5xkYIOu9keCCQje1zyo4UA&osid=1&passive=1209600&service=mail&flowName=WebLiteSignIn&flowEntry=ServiceLogin#inbox/FMfcgzQdzcpNknJlDNDGqJPxcKsvXSvc",
+    "label": "phish",
+    "score": 0.5325891117254893
+  },
+  {
+    "time": "2025-11-30 13:44:02",
+    "url": "https://chatgpt.com/",
+    "label": "legit",
+    "score": 0.4682271480560303
+  },
+  {
+    "time": "2025-11-30 13:44:22",
+    "url": "https://www.youtube.com/watch?v=AYBEmXCX1zA&list=RD-YLQYo5cXwo&index=27",
+    "label": "legit",
+    "score": 0.4795278330643972
+  },
+  {
+    "time": "2025-11-30 13:44:40",
+    "url": "https://chatgpt.com/",
+    "label": "legit",
+    "score": 0.4682271480560303
+  },
+  {
+    "time": "2025-11-30 13:47:26",
+    "url": "https://www.youtube.com/watch?v=MnIjjwmYQdY&list=RD-YLQYo5cXwo&index=2",
+    "label": "legit",
+    "score": 0.46026053229967756
+  },
+  {
+    "time": "2025-11-30 13:47:53",
+    "url": "https://chatgpt.com/codex",
+    "label": "legit",
+    "score": 0.4682271480560303
+  },
+  {
+    "time": "2025-11-30 13:47:53",
+    "url": "https://chatgpt.com/codex",
+    "label": "legit",
+    "score": 0.4682271480560303
+  },
+  {
+    "time": "2025-11-30 13:48:27",
+    "url": "https://chatgpt.com/g/g-p-68f4727151488191ad634c7cb9698053-dacn/project",
+    "label": "phish",
+    "score": 0.5348938147226969
+  },
+  {
+    "time": "2025-11-30 13:48:27",
+    "url": "https://chatgpt.com/g/g-p-68f4727151488191ad634c7cb9698053-dacn/c/6921d4c8-43f8-8322-bdf5-8444f9c97551",
+    "label": "phish",
+    "score": 0.534934663772583
+  },
+  {
+    "time": "2025-11-30 13:48:42",
+    "url": "https://chatgpt.com/g/g-p-68f4727151488191ad634c7cb9698053/c/6921d4c8-43f8-8322-bdf5-8444f9c97551",
+    "label": "phish",
+    "score": 0.5348938147226969
+  },
+  {
+    "time": "2025-11-30 13:51:59",
+    "url": "https://www.youtube.com/watch?v=j4yeaosbDzg&list=RD-YLQYo5cXwo&index=9",
+    "label": "legit",
+    "score": 0.46948525508244837
+  },
+  {
+    "time": "2025-11-30 13:53:45",
+    "url": "https://www.youtube.com/watch?v=imJswP9j8-U&list=RD-YLQYo5cXwo&index=10",
+    "label": "legit",
+    "score": 0.4817152738571167
+  },
+  {
+    "time": "2025-11-30 13:57:37",
+    "url": "https://www.youtube.com/watch?v=yHikkFeIHNA&list=RD-YLQYo5cXwo&index=11",
+    "label": "legit",
+    "score": 0.4600090305010478
+  },
+  {
+    "time": "2025-11-30 14:02:39",
+    "url": "https://www.youtube.com/",
+    "label": "legit",
+    "score": 0.38822714805603026
+  },
+  {
+    "time": "2025-11-30 14:05:10",
+    "url": "https://www.youtube.com/watch?v=nsm32kHAaEA&list=RD-YLQYo5cXwo&index=12",
+    "label": "legit",
+    "score": 0.42682899554570514
+  },
+  {
+    "time": "2025-11-30 14:10:56",
+    "url": "https://www.canva.com/",
+    "label": "legit",
+    "score": 0.3884878587722778
+  },
+  {
+    "time": "2025-11-30 14:11:12",
+    "url": "https://www.youtube.com/watch?v=stvWuowo1dU&list=RD-YLQYo5cXwo&index=13",
+    "label": "legit",
+    "score": 0.4062499256928762
+  },
+  {
+    "time": "2025-11-30 14:14:09",
+    "url": "https://hutechcheckin.com/ChungNhan",
+    "label": "legit",
+    "score": 0.3713433476289113
+  },
+  {
+    "time": "2025-11-30 14:15:36",
+    "url": "https://www.youtube.com/watch?v=rTCss2U__fc&list=RD-YLQYo5cXwo&index=14",
+    "label": "legit",
+    "score": 0.43414662798245746
+  },
+  {
+    "time": "2025-11-30 14:17:05",
+    "url": "https://www.youtube.com/watch?v=rTCss2U__fc&list=RD-YLQYo5cXwo&index=14",
+    "label": "legit",
+    "score": 0.43414662798245746
+  },
+  {
+    "time": "2025-11-30 14:21:13",
+    "url": "https://www.canva.com/design/DAG6J4lk1bk/7pPNXeLbiazHEg5PiGkqVQ/edit",
+    "label": "legit",
+    "score": 0.42182119210561114
+  },
+  {
+    "time": "2025-11-30 14:21:32",
+    "url": "https://www.canva.com/design/DAG6J4lk1bk/7pPNXeLbiazHEg5PiGkqVQ/edit",
+    "label": "legit",
+    "score": 0.42182119210561114
+  },
+  {
+    "time": "2025-11-30 14:26:27",
+    "url": "https://chatgpt.com/g/g-p-68f4727151488191ad634c7cb9698053/c/6921d4c8-43f8-8322-bdf5-8444f9c97551",
+    "label": "legit",
+    "score": 0.454934663772583
+  },
+  {
+    "time": "2025-11-30 14:28:53",
+    "url": "https://www.facebook.com/",
+    "label": "legit",
+    "score": 0.37613465706507365
+  },
+  {
+    "time": "2025-11-30 14:29:06",
+    "url": "https://www.facebook.com/",
+    "label": "legit",
+    "score": 0.37613465706507365
+  },
+  {
+    "time": "2025-11-30 15:02:33",
+    "url": "https://www.facebook.com/",
+    "label": "legit",
+    "score": 0.37613465706507365
+  },
+  {
+    "time": "2025-11-30 15:03:00",
+    "url": "https://www.facebook.com/",
+    "label": "legit",
+    "score": 0.37613465706507365
+  },
+  {
+    "time": "2025-11-30 15:03:26",
+    "url": "https://phishtank.org/phish_detail.php?phish_id=9262536",
+    "label": "legit",
+    "score": 0.38901514132817583
+  },
+  {
+    "time": "2025-11-30 15:03:27",
+    "url": "https://phishtank.org/phish_detail.php?phish_id=9262536&__cf_chl_tk=N.2M6CEMgX7nC1BtvfrSJTePewWPNNwMOwl4f_Wa6dI-1764489800-1.0.1.1-4rcJpK4eH60NPK1sOYmqvBSwwAWqg1VWG6LbEIM2H6M",
+    "label": "phish",
+    "score": 0.5556818079948426
+  },
+  {
+    "time": "2025-11-30 15:04:41",
+    "url": "https://vesophuongtrang.com/login.html?ref=https://vesophuongtrang.com:443/user/thong-tin-ve-do.html",
+    "label": "legit",
+    "score": 0.46557720820109044
+  },
+  {
+    "time": "2025-11-30 15:04:52",
+    "url": "https://phishtank.org/index.php",
+    "label": "legit",
+    "score": 0.3270281684398651
+  },
+  {
+    "time": "2025-11-30 15:05:01",
+    "url": "https://phishtank.org/index.php",
+    "label": "legit",
+    "score": 0.3270281684398651
+  },
+  {
+    "time": "2025-11-30 15:05:17",
+    "url": "https://amex.up-hthsport.com/",
+    "label": "legit",
+    "score": 0.38822714805603026
+  },
+  {
+    "time": "2025-11-30 15:05:44",
+    "url": "https://amex.up-hthsport.com/login",
+    "label": "legit",
+    "score": 0.48822714805603024
+  },
+  {
+    "time": "2025-11-30 15:06:02",
+    "url": "https://amex.up-hthsport.com/login",
+    "label": "legit",
+    "score": 0.48822714805603024
+  },
+  {
+    "time": "2025-11-30 15:06:04",
+    "url": "https://amex.up-hthsport.com/login",
+    "label": "legit",
+    "score": 0.48822714805603024
+  },
+  {
+    "time": "2025-11-30 15:06:08",
+    "url": "https://amex.up-hthsport.com/login",
+    "label": "legit",
+    "score": 0.48822714805603024
+  },
+  {
+    "time": "2025-11-30 15:06:45",
+    "url": "http://\thttps://www.teletncl.site",
+    "label": "legit",
+    "score": 0.42
+  },
+  {
+    "time": "2025-11-30 15:07:08",
+    "url": "https://vpass-jp.dzcdjj.com/cdn-cgi/phish-bypass?atok=gWGYf0ioXQ8QejgXgBNpxAwDunjj6DuU5a3RLgU_BrM-1762666574.822089-0.0.1.1-%2F&original_path=%2F&cf-turnstile-response=",
+    "label": "phish",
+    "score": 0.82
+  },
+  {
+    "time": "2025-12-06 17:51:04",
+    "url": "https://www.youtube.com/",
+    "label": "legit",
+    "score": 0.3859322698911031
+  },
+  {
+    "time": "2025-12-06 17:51:16",
+    "url": "https://www.youtube.com/",
+    "label": "legit",
+    "score": 0.3859322698911031
+  },
+  {
+    "time": "2025-12-06 17:51:44",
+    "url": "https://phishtank.org/phish_detail.php?phish_id=9262536",
+    "label": "legit",
+    "score": 0.38920613447825114
+  },
+  {
+    "time": "2025-12-06 17:51:47",
+    "url": "https://phishtank.org/index.php",
+    "label": "legit",
+    "score": 0.32697721143563585
+  },
+  {
+    "time": "2025-12-06 17:52:02",
+    "url": "http://\thttps://www.allegro.plsd2bgflstxltc41gk.icu",
+    "label": "legit",
+    "score": 0.42
+  },
+  {
+    "time": "2025-12-07 12:50:18",
+    "url": "https://www.youtube.com/",
+    "label": "legit",
+    "score": 0.38822714805603026
+  },
+  {
+    "time": "2025-12-07 12:50:20",
+    "url": "https://www.youtube.com/",
+    "label": "legit",
+    "score": 0.3859322698911031
+  },
+  {
+    "time": "2025-12-07 12:50:20",
+    "url": "https://www.youtube.com/watch?v=yW1FORtuRdc",
+    "label": "legit",
+    "score": 0.3722489507993062
+  },
+  {
+    "time": "2025-12-07 12:50:39",
+    "url": "https://www.youtube.com/watch?v=yW1FORtuRdc",
+    "label": "legit",
+    "score": 0.3722489507993062
+  },
+  {
+    "time": "2025-12-07 12:51:30",
+    "url": "https://www.google.com/search?q=gg+d%E1%BB%8Bch&oq=&gs_lcrp=EgZjaHJvbWUqCQgAECMYJxjqAjIJCAAQIxgnGOoCMgkIARAjGCcY6gIyCQgCECMYJxjqAjIJCAMQIxgnGOoCMgkIBBAjGCcY6gIyCQgFECMYJxjqAjIJCAYQIxgnGOoCMgkIBxAjGCcY6gLSAQw3NzUyMTgyMmowajeoAgiwAgHxBY7Q-KsWMkdM8QWO0PirFjJHTA&sourceid=chrome&ie=UTF-8",
+    "label": "legit",
+    "score": 0.4518423648675282
+  },
+  {
+    "time": "2025-12-07 12:51:34",
+    "url": "https://phishtank.org/phish_detail.php?phish_id=9262536",
+    "label": "legit",
+    "score": 0.38901514132817583
+  },
+  {
+    "time": "2025-12-07 12:51:34",
+    "url": "https://phishtank.org/phish_detail.php?phish_id=9262536&__cf_chl_tk=S86KZlxq533hpdsNqIZ5OKBfD3oGEKcW6YEV2d0tpcM-1765086687-1.0.1.1-p.AYCOHJ9KaEZNxGOR0KuunyeHvljEt5.2GczlmlGGw",
+    "label": "phish",
+    "score": 0.5556225907802582
+  },
+  {
+    "time": "2025-12-07 12:51:41",
+    "url": "https://phishtank.org/index.php",
+    "label": "legit",
+    "score": 0.3270455978314082
+  },
+  {
+    "time": "2025-12-07 12:51:54",
+    "url": "http://\thttps://www.allegrolokalne.pl-smart014394.cfd",
+    "label": "phish",
+    "score": 1.0
+  },
+  {
+    "time": "2025-12-07 12:52:57",
+    "url": "http://\thttps://www.allegrolokalne.pl-smart014394.cfd",
+    "label": "phish",
+    "score": 1.0
+  },
+  {
+    "time": "2025-12-07 13:00:43",
+    "url": "https://hutechcheckin.com/ChungNhan",
+    "label": "legit",
+    "score": 0.3713433476289113
+  },
+  {
+    "time": "2025-12-07 13:00:56",
+    "url": "https://hutechcheckin.com/ChungNhan",
+    "label": "legit",
+    "score": 0.3713433476289113
+  },
+  {
+    "time": "2025-12-07 13:01:14",
+    "url": "https://phishtank.org/phish_detail.php?phish_id=9262536",
+    "label": "legit",
+    "score": 0.38920613447825114
+  },
+  {
+    "time": "2025-12-07 13:01:17",
+    "url": "https://phishtank.org/index.php",
+    "label": "legit",
+    "score": 0.3270455978314082
+  },
+  {
+    "time": "2025-12-07 13:01:51",
+    "url": "http://\thttps://www.allegrolokalne.pl-smart014394.cfd",
+    "label": "phish",
+    "score": 0.67
+  },
+  {
+    "time": "2025-12-07 13:06:08",
+    "url": "https://hutechcheckin.com/ChungNhan",
+    "label": "legit",
+    "score": 0.3713433476289113
+  },
+  {
+    "time": "2025-12-07 13:06:20",
+    "url": "https://hutechcheckin.com/ChungNhan",
+    "label": "legit",
+    "score": 0.3713433476289113
+  },
+  {
+    "time": "2025-12-07 13:06:51",
+    "url": "https://phishtank.org/index.php",
+    "label": "legit",
+    "score": 0.3270455978314082
+  },
+  {
+    "time": "2025-12-07 13:07:24",
+    "url": "https://www.allegro.pl-smart058124.cfd",
+    "label": "phish",
+    "score": 0.67
+  },
+  {
+    "time": "2025-12-07 13:07:50",
+    "url": "http://\thttp://altaauction.com",
+    "label": "phish",
+    "score": 0.67
+  },
+  {
+    "time": "2025-12-07 13:08:07",
+    "url": "https://phishtank.org/phish_archive.php",
+    "label": "legit",
+    "score": 0.38920613447825114
+  },
+  {
+    "time": "2025-12-07 13:10:41",
+    "url": "https://phishtank.org/phish_search.php?verified=u&active=y",
+    "label": "legit",
+    "score": 0.3671333821614583
+  }
+]
